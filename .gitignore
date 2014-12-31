@@ -6,10 +6,12 @@
 
 # R data files from past sessions
 .Rdata
+.RData
 
 # RStudio files
 .Rproj.user/
 .Rproj.user
+*.Rproj
 
 # data files
 ch1/data/ufo_awesome.tsv
