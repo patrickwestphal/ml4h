@@ -9,3 +9,7 @@
 
 # RStudio files
 .Rproj.user/
+.Rproj.user
+
+# data files
+ch1/data/ufo_awesome.tsv
