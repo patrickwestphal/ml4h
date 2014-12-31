@@ -1,4 +1,4 @@
-requirements <- c('ggplot2')
+requirements <- c('ggplot2', 'devtools')
 installed_pckgs <- .packages(all=T)
 
 for (package in requirements) {
