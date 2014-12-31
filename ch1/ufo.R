@@ -1,3 +1,5 @@
+library(ggplot2)
+
 load_ufo_dataset <- function() {
     ###########################################################################
     # constants:
@@ -70,6 +72,8 @@ load_ufo_dataset <- function() {
     ufo_data
 }
 
+#' @param location_str A string containing a city and a state, e.g. Brunswick County, ND
+#' @return A vector containing the city and state as separate items
 get_location <- function(location_str) {
     # split on ',' / return (NA, NA) in case no ',' is present
     split_location <- tryCatch(
@@ -88,4 +92,27 @@ get_location <- function(location_str) {
     } else {
         return(clean_location)
     }
+}
+
+#' @param ufo_data A data frame created by the load_ufo_dataset function
+#' @param output_file_path A string containing the file path where to store the histogram image
+#' @param only_last_decades Boolean indicating whether to consider the whole data, or only sightings after 1990-01-01
+print_histogram <- function(ufo_data, output_file_path=NULL, only_last_decades=F) {
+    if (only_last_decades) {
+        ld_idxs <- ufo_data[, 1] > as.Date("1990-01-01")
+        ufo_data <- ufo_data[ld_idxs, ]
+    }
+    
+    #       basic layer w/ DateOccurred as X vals   histogram layer
+    hist <- ggplot(ufo_data, aes(x=DateOccurred)) + geom_histogram()
+    
+    if (!only_last_decades) {
+        # scale the X axis labels to occur every 50 years
+        hist <- hist + scale_x_date(breaks='100 years')
+    }
+    
+    if (!is.null(output_file_path)) {
+        ggsave(plot=hist, filename=output_file_path, height=6, width=8)
+    }
+    print(hist)
 }
