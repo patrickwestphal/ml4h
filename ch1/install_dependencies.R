@@ -1,4 +1,4 @@
-requirements <- c('ggplot2', 'RCurl')
+requirements <- c('ggplot2')
 installed_pckgs <- .packages(all=T)
 
 for (package in requirements) {
