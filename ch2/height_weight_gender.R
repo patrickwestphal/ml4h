@@ -1,4 +1,4 @@
-library(ggplot2)
+# library(ggplot2)
 
 load_whg_data <- function() {
     ###########################################################################
@@ -54,5 +54,37 @@ plot_density_by_gender <- function(whg_data, col='Height') {
     plot <- ggplot(whg_data, aes_string(x=col))+
                 geom_density() +
                 facet_grid(Gender ~ .)
+    print(plot)
+}
+
+#' @param whg_data The weight/height/gender data frame created by the load_whg_data function
+plot_height_weight <- function(wh_data, num_samples=0) {
+    if (num_samples == 0) {
+        num_samples <- nrow(whd_data)
+    }
+    plot <- ggplot(whg_data[0:num_samples, ], aes(x=Height, y=Weight, color=Gender)) +
+                geom_point() + geom_smooth() #+ facet_grid(Gender ~ .)
+
+    print(plot)
+}
+
+plot_bell_curve <- function(mean=0, variance=1) {
+    df <- data.frame(X=rnorm(10000, mean, variance))
+    plot <- ggplot(df, aes(x=X)) + geom_density()
+
+    print(plot)
+}
+
+plot_gamma_curve <- function(shape=1, rate=0.001) {
+    df <- data.frame(X=rgamma(100000, shape, rate), shape, rate)
+    ggplot(df, aes(x=X)) + geom_density()
+
+    print(plot)
+}
+
+plot_exponential_curve <- function(rate=1) {
+    df <- data.frame(X=rexp(n=100000, rate))
+    plot <- ggplot(df, aes(x=X)) + geom_density()
+    
     print(plot)
 }
